@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+use App\Task;
 use App\Widget;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -24,5 +25,13 @@ Route::get('/widgets', function (Request $request) {
 
 Route::get('/widgets/{id}', function (Request $request) {
     return Widget::findorFail($request->id);
+});
+
+Route::get('/tasks', function (Request $request) {
+    return Task::with('user')->get();
+});
+
+Route::get('/tasks/{id}', function (Request $request) {
+    return Task::with('user')->findorFail($request->id);
 });
 
