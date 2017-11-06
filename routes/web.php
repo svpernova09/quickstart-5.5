@@ -10,7 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Task;
+use App\User;
 use App\Widget;
+use App\Http\Requests\TaskCreateRequest;
 use App\Http\Requests\WidgetCreateRequest;
 
 Route::group(['middleware' => 'web'], function () {
@@ -18,24 +21,30 @@ Route::group(['middleware' => 'web'], function () {
         return view('welcome');
     });
 
-    Route::get('/widgets', function () {
-        $widgets = Widget::all();
+    Route::get('widgets', 'WidgetController@index')->name('widgets.index');
+    Route::get('widgets/add', 'WidgetController@add')->name('widgets.add');
+    Route::post('widgets', 'WidgetController@create')->name('widgets.create');
 
-        return view('widgets.index')
-            ->with('widgets', $widgets);
+    Route::get('/tasks', function () {
+        $tasks = Task::all();
+
+        return view('tasks.index')
+            ->with('tasks', $tasks);
     });
 
-    Route::get('/widgets/add', function () {
-        return view ('widgets.add');
+    Route::get('/tasks/add', function () {
+        $users = User::all();
+
+        return view('tasks.add')
+            ->with('users', $users);
     });
 
-    Route::post('/widgets', function (WidgetCreateRequest $request) {
-        $widget = new Widget();
-        $widget->name = $request->name;
-        $widget->description = $request->description;
-        $widget->price = $request->price;
-        $widget->save();
+    Route::post('/tasks', function (TaskCreateRequest $request) {
+        $task = new Task();
+        $task->name = $request->name;
+        $task->user_id = $request->user_id;
+        $task->save();
 
-        return redirect()->to('/widgets');
+        return redirect()->to('/tasks');
     });
 });
