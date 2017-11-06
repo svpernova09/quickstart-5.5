@@ -31,3 +31,7 @@ Route::group(['middleware' => 'web'], function () {
             ->with('users', $users);
     });
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

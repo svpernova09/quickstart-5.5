@@ -5,49 +5,48 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class TasksTest extends TestCase
+class UsersTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public function testTasksRoute()
+    public function testUsersRoute()
     {
         $user = factory(App\User::class)->create();
 
         $this->actingAs($user)
-            ->visit('/tasks')
-            ->see('Tasks Index');
+            ->visit('/users')
+            ->see('Users Index');
 
         $this->assertResponseOk();
     }
 
-    public function testTasksNavigation()
+    public function testUsersNavigation()
     {
         $user = factory(App\User::class)->create();
 
         $this->actingAs($user)
             ->visit('/')
-            ->click('Tasks')
-            ->seePageIs('/tasks');
+            ->click('Users')
+            ->seePageIs('/users');
     }
 
-    public function testTasksViewHasData()
+    public function testUsersViewHasData()
     {
         $user = factory(App\User::class)->create();
 
         $this->actingAs($user)
-            ->visit('/tasks')
-            ->seePageIs('/tasks');
+            ->visit('/users')
+            ->seePageIs('/users');
 
-        $this->assertViewHas('tasks');
+        $this->assertViewHas('users');
     }
 
     public function testDataExists()
     {
-        $task = factory(App\Task::class)->create();
         $user = factory(App\User::class)->create();
 
         $this->actingAs($user)
-            ->visit('/tasks')
-            ->see($task->name);
+            ->visit('/users')
+            ->see($user->name);
     }
 }
