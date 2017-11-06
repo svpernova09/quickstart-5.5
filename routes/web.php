@@ -11,14 +11,31 @@
 |
 */
 use App\Widget;
+use App\Http\Requests\WidgetCreateRequest;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::group(['middleware' => 'web'], function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
 
-Route::get('/widgets', function () {
-    $widgets = Widget::all();
+    Route::get('/widgets', function () {
+        $widgets = Widget::all();
 
-    return view('widgets.index')
-        ->with('widgets', $widgets);
+        return view('widgets.index')
+            ->with('widgets', $widgets);
+    });
+
+    Route::get('/widgets/add', function () {
+        return view ('widgets.add');
+    });
+
+    Route::post('/widgets', function (WidgetCreateRequest $request) {
+        $widget = new Widget();
+        $widget->name = $request->name;
+        $widget->description = $request->description;
+        $widget->price = $request->price;
+        $widget->save();
+
+        return redirect()->to('/widgets');
+    });
 });

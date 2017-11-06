@@ -13,5 +13,6 @@ class DatabaseSeeder extends Seeder
     {
         factory(App\User::class, 5)->create();
          $this->call(WidgetSeeder::class);
+         $this->call(TaskSeeder::class);
     }
 }
