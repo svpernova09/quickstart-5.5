@@ -29,4 +29,14 @@ class WidgetCreateRequest extends FormRequest
             'price' => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'You must enter a Widget Name',
+            'name.max' => 'The Widget name must be less than 255 characters',
+            'description.required' => 'You must enter a Widget Description',
+            'price.required' => 'You must enter a Widget Price',
+        ];
+    }
 }

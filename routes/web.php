@@ -11,11 +11,17 @@
 |
 */
 
-Route::group(['middleware' => 'web'], function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+Route::get('/', function () {
+    return view('welcome');
+});
 
+Route::get('/marketing/join-list', 'MarketingEmailController@showJoin');
+Route::post('/marketing/join-list', 'MarketingEmailController@doJoin');
+Route::get('/marketing/pending', 'MarketingEmailController@showPending')->name('show-pending');
+Route::get('/marketing/verify-email/{hash}', 'MarketingEmailController@validateEmailHash');
+
+
+Route::group(['middleware' => ['auth', 'web']], function () {
     Route::get('widgets', 'WidgetController@index')->name('widgets.index');
     Route::get('widgets/add', 'WidgetController@add')->name('widgets.add');
     Route::post('widgets', 'WidgetController@create')->name('widgets.create');

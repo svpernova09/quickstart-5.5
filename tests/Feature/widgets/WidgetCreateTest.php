@@ -52,4 +52,31 @@ class WidgetCreateTest extends TestCase
             ->press('Add Widget')
             ->seePageIs('/widgets/add');
     }
+
+    public function testErrorMessages()
+    {
+        $user = factory(App\User::class)->create();
+
+        $this->actingAs($user)
+            ->visit('/widgets/add')
+            ->press('Add Widget')
+            ->see('You must enter a Widget Name')
+            ->see('You must enter a Widget Description')
+            ->see('You must enter a Widget Price')
+            ->seePageIs('/widgets/add');
+    }
+
+    public function testOldInput()
+    {
+        $user = factory(App\User::class)->create();
+
+        $this->actingAs($user)
+            ->visit('/widgets/add')
+            ->type('Test Widget', 'name')
+            ->press('Add Widget')
+            ->see('You must enter a Widget Description')
+            ->see('You must enter a Widget Price')
+            ->seeInField('name', 'Test Widget')
+            ->seePageIs('/widgets/add');
+    }
 }
