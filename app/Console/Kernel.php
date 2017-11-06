@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\AuthLoginCommand;
+use App\Console\Commands\AuthRegisterCommand;
 use App\Console\Commands\BasicCommand;
 use App\Console\Commands\InputExample;
 use App\Console\Commands\InputPrompt;
@@ -17,6 +19,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        AuthLoginCommand::class,
+        AuthRegisterCommand::class,
         BasicCommand::class,
         InputExample::class,
         OptionExample::class,
