@@ -15,7 +15,7 @@
                         <label for="task-name" class="col-sm-3 control-label">Name</label>
 
                         <div class="col-sm-6">
-                            <input type="text" name="name" id="task-name" class="form-control" value="">
+                            <input type="text" name="name" id="task-name" class="form-control" value="{{ old('name')  }}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -24,7 +24,11 @@
                         <div class="col-sm-6">
                             <select name="user_id" id="task-user_id" class="form-control">
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @if(old('user_id') == $user->id)
+                                        <option value="{{ $user->id }}" selected>{{ $user->name }}</option>
+                                    @else
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>

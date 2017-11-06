@@ -28,4 +28,14 @@ class TaskCreateRequest extends FormRequest
             'user_id' => 'required|exists:users,id',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'You must enter a Task Name',
+            'name.max' => 'The Task name must be less than 255 characters',
+            'user_id.required' => 'You must select a user from the dropdown',
+            'user_id.exists' => 'Please select a valid user',
+        ];
+    }
 }

@@ -49,4 +49,29 @@ class TaskCreateTest extends TestCase
             ->press('Add Task')
             ->seePageIs('/tasks/add');
     }
+
+    public function testErrorMessages()
+    {
+        $user = factory(App\User::class)->create();
+
+        $this->actingAs($user)
+            ->visit('/tasks/add')
+            ->select($user->id, 'user_id')
+            ->press('Add Task')
+            ->see('You must enter a Task Name')
+            ->seePageIs('/tasks/add');
+    }
+
+    public function testOldInput()
+    {
+        $user = factory(App\User::class)->create();
+
+        $this->actingAs($user)
+            ->visit('/tasks/add')
+            ->select($user->id, 'user_id')
+            ->press('Add Task')
+            ->see('You must enter a Task Name')
+            ->seeIsSelected('user_id', $user->id)
+            ->seePageIs('/tasks/add');
+    }
 }

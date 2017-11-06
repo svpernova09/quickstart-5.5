@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,24 +23,16 @@ Route::post('/marketing/join-list', 'MarketingEmailController@doJoin');
 Route::get('/marketing/pending', 'MarketingEmailController@showPending')->name('show-pending');
 Route::get('/marketing/verify-email/{hash}', 'MarketingEmailController@validateEmailHash');
 
-
 Route::group(['middleware' => ['auth', 'web']], function () {
     Route::get('widgets', 'WidgetController@index')->name('widgets.index');
     Route::get('widgets/add', 'WidgetController@add')->name('widgets.add');
     Route::post('widgets', 'WidgetController@create')->name('widgets.create');
-
     Route::get('tasks', 'TaskController@index')->name('tasks.index');
     Route::get('tasks/add', 'TaskController@add')->name('tasks.add');
     Route::post('tasks', 'TaskController@create')->name('tasks.create');
-
     Route::get('/users', function () {
         $users = \App\User::with('tasks')->get();
-
         return view('users.index')
             ->with('users', $users);
     });
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
