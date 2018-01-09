@@ -24,21 +24,22 @@ class TaskCreateTest extends TestCase
         $this->assertResponseOk();
     }
 
-    public function testFormSubmitWorks()
-    {
-        $user = factory(App\User::class)->create();
+public function testFormSubmitWorks()
+{
+    $user = factory(App\User::class)->create();
+    $random_user = User::all()->random();
 
-        $this->actingAs($user)
-            ->visit('/tasks/add')
-            ->type('Test Task', 'name')
-            ->select($user->id, 'user_id')
-            ->press('Add Task')
-            ->seePageIs('/tasks')
-            ->seeInDatabase('tasks', [
-                'name' => 'Test Task',
-                'user_id' => $user->id,
-            ]);
-    }
+    $this->actingAs($user)
+        ->visit('/tasks/add')
+        ->type('Test Task', 'name')
+        ->select($random_user->id, 'user_id')
+        ->press('Add Task')
+        ->seePageIs('/tasks')
+        ->seeInDatabase('tasks', [
+            'name' => 'Test Task',
+            'user_id' => $random_user->id,
+        ]);
+}
 
     public function testFormValidation()
     {
