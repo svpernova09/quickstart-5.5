@@ -9,13 +9,13 @@ use App\User;
 
 class TaskController extends Controller
 {
-    public function index()
-    {
-        $tasks = Task::with('user')->get();
+public function index()
+{
+    $tasks = Task::with('user')->get();
 
-        return view('tasks.index')
-            ->with('tasks', $tasks);
-    }
+    return view('tasks.index')
+        ->with('tasks', $tasks);
+}
 
     public function add()
     {
